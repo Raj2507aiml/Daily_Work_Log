@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Daily Work Log</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="app">
+    <header class="header">
+      <h1>📘 Daily Work Log</h1>
+      <p>Track your daily tasks and hours easily</p>
+    </header>
+
+    <div class="card">
+      <h2>Add New Log</h2>
+      <div class="form">
+        <input type="text" id="taskInput" placeholder="Task name" />
+        <input type="number" id="hoursInput" placeholder="Hours worked" />
+        <button id="addButton">➕ Add Log</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Work Logs</h2>
+      <ul id="logsList" class="logs"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
