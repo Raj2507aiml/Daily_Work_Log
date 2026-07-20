@@ -1,34 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Daily Work Log</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Daily Work Log — track tasks, productivity, and progress." />
+  <title>Tasks · Daily Work Log</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body>
+  <div id="page-loader" class="page-loader" aria-hidden="true">
+    <div class="loader-spinner"></div>
+  </div>
 
-  <div class="app">
-    <header class="header">
-      <h1>📘 Daily Work Log</h1>
-      <p>Track your daily tasks and hours easily</p>
-    </header>
-
-    <div class="card">
-      <h2>Add New Log</h2>
-      <div class="form">
-        <input type="text" id="taskInput" placeholder="Task name" />
-        <input type="number" id="hoursInput" placeholder="Hours worked" />
-        <button id="addButton">➕ Add Log</button>
+  <div class="app-shell" id="tasks-root">
+    <!-- Desktop sidebar -->
+    <aside class="sidebar" aria-label="Primary">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon"><i data-lucide="clipboard-list"></i></div>
+        <div class="sidebar-brand-text">
+          Daily Work Log
+          <span>Productivity OS</span>
+        </div>
       </div>
-    </div>
+      <nav class="sidebar-nav">
+        <a class="nav-item" href="dashboard.html"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+        <a class="nav-item active" href="index.html"><i data-lucide="check-square"></i> Tasks</a>
+        <a class="nav-item" href="calendar.html"><i data-lucide="calendar"></i> Calendar</a>
+        <a class="nav-item" href="analytics.html"><i data-lucide="bar-chart-3"></i> Analytics</a>
+        <a class="nav-item" href="profile.html"><i data-lucide="user"></i> Profile</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a class="sidebar-user" href="profile.html">
+          <div class="avatar" data-nav-initials>AR</div>
+          <div class="sidebar-user-info">
+            <strong data-nav-name>Alex Rivera</strong>
+            <span data-nav-role>Product Designer</span>
+          </div>
+        </a>
+      </div>
+    </aside>
 
-    <div class="card">
-      <h2>Work Logs</h2>
-      <ul id="logsList" class="logs"></ul>
+    <!-- Mobile floating nav -->
+    <nav class="bottom-nav" aria-label="Primary">
+      <a class="nav-item" href="dashboard.html"><i data-lucide="layout-dashboard"></i> Home</a>
+      <a class="nav-item active" href="index.html"><i data-lucide="check-square"></i> Tasks</a>
+      <a class="nav-item" href="calendar.html"><i data-lucide="calendar"></i> Calendar</a>
+      <a class="nav-item" href="analytics.html"><i data-lucide="bar-chart-3"></i> Stats</a>
+      <a class="nav-item" href="profile.html"><i data-lucide="user"></i> Profile</a>
+    </nav>
+
+    <main class="main-content page-enter">
+      <header class="page-header page-header-row">
+        <div>
+          <h1>Tasks</h1>
+          <p>Capture, prioritize, and complete your daily work.</p>
+        </div>
+        <button type="button" class="btn btn-primary" id="btn-add-task">
+          <i data-lucide="plus"></i> Add task
+        </button>
+      </header>
+
+      <div class="toolbar">
+        <div class="search-wrap">
+          <i data-lucide="search"></i>
+          <input type="search" id="task-search" class="form-control" placeholder="Search tasks..." autocomplete="off" />
+        </div>
+        <div class="toolbar-filters">
+          <button type="button" class="chip active" data-status-chip="all">All</button>
+          <button type="button" class="chip" data-status-chip="pending">Pending</button>
+          <button type="button" class="chip" data-status-chip="completed">Done</button>
+        </div>
+      </div>
+
+      <div class="toolbar toolbar-tight">
+        <select id="filter-priority" class="form-control filter-select" aria-label="Priority">
+          <option value="all">All priorities</option>
+          <option value="high">High</option>
+          <option value="medium">Medium</option>
+          <option value="low">Low</option>
+        </select>
+        <select id="filter-status" class="form-control filter-select" aria-label="Status">
+          <option value="all">All status</option>
+          <option value="pending">Pending</option>
+          <option value="completed">Completed</option>
+        </select>
+        <select id="filter-category" class="form-control filter-select-wide" aria-label="Category">
+          <option value="all">All categories</option>
+        </select>
+        <select id="filter-sort" class="form-control filter-select" aria-label="Sort">
+          <option value="dueDate">Sort: Due date</option>
+          <option value="priority">Sort: Priority</option>
+          <option value="title">Sort: Title</option>
+          <option value="created">Sort: Newest</option>
+        </select>
+        <span class="task-count-label" id="task-count"></span>
+      </div>
+
+      <section class="card card-elevated">
+        <div id="task-list" class="task-list stagger"></div>
+        <div id="tasks-empty" class="empty-state hidden">
+          <div class="empty-state-icon"><i data-lucide="inbox"></i></div>
+          <h3>No tasks found</h3>
+          <p>Try a different filter, or add a new task to get rolling.</p>
+          <button type="button" class="btn btn-primary" id="btn-empty-add">
+            <i data-lucide="plus"></i> Create task
+          </button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <button type="button" class="fab" id="fab-add-task" aria-label="Add task" data-tooltip="New task (N)">
+    <i data-lucide="plus"></i>
+  </button>
+
+  <!-- Add / Edit modal -->
+  <div class="modal-overlay" id="task-modal" role="dialog" aria-modal="true" aria-labelledby="modal-task-title">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <h2 id="modal-task-title">Add task</h2>
+          <p>Fill in the details below. Everything saves locally.</p>
+        </div>
+        <button type="button" class="btn-icon" data-close-modal aria-label="Close">
+          <i data-lucide="x"></i>
+        </button>
+      </div>
+      <form id="task-form">
+        <div class="form-floating">
+          <input type="text" id="task-title" class="form-control" placeholder=" " required maxlength="120" />
+          <label for="task-title">Task title</label>
+        </div>
+        <div class="form-floating">
+          <textarea id="task-description" class="form-control" placeholder=" " maxlength="500"></textarea>
+          <label for="task-description">Description</label>
+        </div>
+        <div class="form-floating">
+          <textarea id="task-notes" class="form-control" placeholder=" " maxlength="400"></textarea>
+          <label for="task-notes">Notes</label>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority" class="form-control">
+              <option value="low">Low</option>
+              <option value="medium" selected>Medium</option>
+              <option value="high">High</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="task-category">Category</label>
+            <select id="task-category" class="form-control">
+              <option value="Work">Work</option>
+              <option value="Personal">Personal</option>
+              <option value="Health">Health</option>
+              <option value="Learning">Learning</option>
+              <option value="Design">Design</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="task-due">Due date</label>
+          <input type="date" id="task-due" class="form-control" required />
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" data-close-modal>Cancel</button>
+          <button type="submit" class="btn btn-primary"><i data-lucide="check"></i> Save task</button>
+        </div>
+      </form>
     </div>
   </div>
 
-  <script src="script.js"></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>

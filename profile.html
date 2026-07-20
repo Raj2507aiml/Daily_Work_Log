@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Profile and settings for Daily Work Log." />
+  <title>Profile · Daily Work Log</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div id="page-loader" class="page-loader" aria-hidden="true">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <div class="app-shell" id="profile-root">
+    <aside class="sidebar" aria-label="Primary">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon"><i data-lucide="clipboard-list"></i></div>
+        <div class="sidebar-brand-text">
+          Daily Work Log
+          <span>Productivity OS</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-item" href="dashboard.html"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+        <a class="nav-item" href="index.html"><i data-lucide="check-square"></i> Tasks</a>
+        <a class="nav-item" href="calendar.html"><i data-lucide="calendar"></i> Calendar</a>
+        <a class="nav-item" href="analytics.html"><i data-lucide="bar-chart-3"></i> Analytics</a>
+        <a class="nav-item active" href="profile.html"><i data-lucide="user"></i> Profile</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a class="sidebar-user" href="profile.html">
+          <div class="avatar" data-nav-initials>AR</div>
+          <div class="sidebar-user-info">
+            <strong data-nav-name>Alex Rivera</strong>
+            <span data-nav-role>Product Designer</span>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <nav class="bottom-nav" aria-label="Primary">
+      <a class="nav-item" href="dashboard.html"><i data-lucide="layout-dashboard"></i> Home</a>
+      <a class="nav-item" href="index.html"><i data-lucide="check-square"></i> Tasks</a>
+      <a class="nav-item" href="calendar.html"><i data-lucide="calendar"></i> Calendar</a>
+      <a class="nav-item" href="analytics.html"><i data-lucide="bar-chart-3"></i> Stats</a>
+      <a class="nav-item active" href="profile.html"><i data-lucide="user"></i> Profile</a>
+    </nav>
+
+    <main class="main-content page-enter">
+      <header class="page-header">
+        <h1>Profile</h1>
+        <p>Manage your identity, appearance, and preferences.</p>
+      </header>
+
+      <section class="card profile-hero reveal">
+        <div class="avatar avatar-lg avatar-wrap">
+          <span data-profile-initials>AR</span>
+          <button type="button" class="avatar-edit" aria-label="Change avatar" data-tooltip="Avatar is initials-based">
+            <i data-lucide="camera"></i>
+          </button>
+        </div>
+        <h2 data-profile-name>Alex Rivera</h2>
+        <p class="role" data-profile-role>Product Designer</p>
+        <p class="email" data-profile-email>alex@dailyworklog.app</p>
+      </section>
+
+      <div class="grid-2 section">
+        <section class="card reveal">
+          <div class="card-header">
+            <h3>Edit profile</h3>
+          </div>
+          <form id="profile-form">
+            <div class="form-floating">
+              <input type="text" id="profile-name" class="form-control" placeholder=" " required maxlength="60" />
+              <label for="profile-name">Full name</label>
+            </div>
+            <div class="form-floating">
+              <input type="email" id="profile-email" class="form-control" placeholder=" " required maxlength="80" />
+              <label for="profile-email">Email</label>
+            </div>
+            <div class="form-floating">
+              <input type="text" id="profile-role" class="form-control" placeholder=" " maxlength="60" />
+              <label for="profile-role">Role / title</label>
+            </div>
+            <div class="form-floating">
+              <textarea id="profile-bio" class="form-control" placeholder=" " maxlength="200"></textarea>
+              <label for="profile-bio">Bio</label>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary"><i data-lucide="save"></i> Save changes</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="card reveal">
+          <div class="card-header">
+            <h3>Settings</h3>
+          </div>
+          <div class="settings-list">
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <div class="icon-wrap"><i data-lucide="moon"></i></div>
+                <div>
+                  <strong>Dark mode</strong>
+                  <span>Use a darker interface by default</span>
+                </div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="theme-toggle" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <div class="icon-wrap"><i data-lucide="bell"></i></div>
+                <div>
+                  <strong>Notifications</strong>
+                  <span>Reminder preference (stored locally)</span>
+                </div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="notif-toggle" checked />
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="settings-item">
+              <div class="settings-item-info">
+                <div class="icon-wrap"><i data-lucide="database"></i></div>
+                <div>
+                  <strong>Reset local data</strong>
+                  <span>Clear tasks and restore sample content</span>
+                </div>
+              </div>
+              <button type="button" class="btn btn-secondary btn-sm" id="btn-clear-data">Reset</button>
+            </div>
+          </div>
+
+          <div class="settings-logout">
+            <button type="button" class="btn btn-danger btn-block" id="btn-logout">
+              <i data-lucide="log-out"></i> Log out
+            </button>
+            <p class="logout-note">
+              Signs you out of this device. Your tasks stay saved for your account.
+            </p>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

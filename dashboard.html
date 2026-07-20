@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dashboard overview for Daily Work Log." />
+  <title>Dashboard · Daily Work Log</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+</head>
+<body>
+  <div id="page-loader" class="page-loader" aria-hidden="true">
+    <div class="loader-spinner"></div>
+  </div>
+
+  <div class="app-shell" id="dashboard-root">
+    <aside class="sidebar" aria-label="Primary">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-icon"><i data-lucide="clipboard-list"></i></div>
+        <div class="sidebar-brand-text">
+          Daily Work Log
+          <span>Productivity OS</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <a class="nav-item active" href="dashboard.html"><i data-lucide="layout-dashboard"></i> Dashboard</a>
+        <a class="nav-item" href="index.html"><i data-lucide="check-square"></i> Tasks</a>
+        <a class="nav-item" href="calendar.html"><i data-lucide="calendar"></i> Calendar</a>
+        <a class="nav-item" href="analytics.html"><i data-lucide="bar-chart-3"></i> Analytics</a>
+        <a class="nav-item" href="profile.html"><i data-lucide="user"></i> Profile</a>
+      </nav>
+      <div class="sidebar-footer">
+        <a class="sidebar-user" href="profile.html">
+          <div class="avatar" data-nav-initials>AR</div>
+          <div class="sidebar-user-info">
+            <strong data-nav-name>Alex Rivera</strong>
+            <span data-nav-role>Product Designer</span>
+          </div>
+        </a>
+      </div>
+    </aside>
+
+    <nav class="bottom-nav" aria-label="Primary">
+      <a class="nav-item active" href="dashboard.html"><i data-lucide="layout-dashboard"></i> Home</a>
+      <a class="nav-item" href="index.html"><i data-lucide="check-square"></i> Tasks</a>
+      <a class="nav-item" href="calendar.html"><i data-lucide="calendar"></i> Calendar</a>
+      <a class="nav-item" href="analytics.html"><i data-lucide="bar-chart-3"></i> Stats</a>
+      <a class="nav-item" href="profile.html"><i data-lucide="user"></i> Profile</a>
+    </nav>
+
+    <main class="main-content page-enter">
+      <section class="welcome-section stagger">
+        <div class="card welcome-card">
+          <p class="welcome-greeting">
+            <span class="live-dot" aria-hidden="true"></span>
+            <span id="welcome-greeting">Good morning,</span>
+          </p>
+          <h1>Welcome back, <span class="gradient-text" id="welcome-name">Alex</span></h1>
+          <p>Here’s your snapshot for today — stay focused, finish what matters.</p>
+          <div class="welcome-actions">
+            <a class="btn btn-primary" href="index.html?add=1"><i data-lucide="plus"></i> New task</a>
+            <a class="btn btn-secondary" href="analytics.html"><i data-lucide="trending-up"></i> View analytics</a>
+          </div>
+        </div>
+
+        <div class="card datetime-card card-elevated">
+          <div class="live-row"><span class="live-dot"></span> Live</div>
+          <div class="clock" id="live-clock">--:--</div>
+          <p class="date-label" id="live-date">Loading date…</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Overview</h2>
+          <span class="badge badge-blue" id="stats-live-badge">Live</span>
+        </div>
+        <div class="grid-stats stagger" id="dashboard-stats">
+          <div class="card stat-card card-interactive">
+            <div class="stat-icon"><i data-lucide="list-todo"></i></div>
+            <div class="stat-value" id="stat-today">0</div>
+            <div class="stat-label">Today’s tasks</div>
+          </div>
+          <div class="card stat-card card-interactive">
+            <div class="stat-icon stat-icon-success"><i data-lucide="check-circle-2"></i></div>
+            <div class="stat-value" id="stat-today-done">0</div>
+            <div class="stat-label">Completed today</div>
+          </div>
+          <div class="card stat-card card-interactive">
+            <div class="stat-icon stat-icon-warning"><i data-lucide="circle-dashed"></i></div>
+            <div class="stat-value" id="stat-today-pending">0</div>
+            <div class="stat-label">Pending today</div>
+          </div>
+          <div class="card stat-card card-interactive">
+            <div class="stat-icon"><i data-lucide="layers"></i></div>
+            <div class="stat-value" id="stat-total">0</div>
+            <div class="stat-label">Total tasks</div>
+          </div>
+          <div class="card stat-card card-interactive">
+            <div class="stat-icon stat-icon-info"><i data-lucide="trophy"></i></div>
+            <div class="stat-value" id="stat-completed">0</div>
+            <div class="stat-label">Completed overall</div>
+          </div>
+          <div class="card stat-card card-interactive">
+            <div class="stat-icon stat-icon-warning"><i data-lucide="clock"></i></div>
+            <div class="stat-value" id="stat-pending">0</div>
+            <div class="stat-label">Pending overall</div>
+          </div>
+          <div class="card stat-card card-interactive">
+            <div class="stat-icon stat-icon-warning"><i data-lucide="flame"></i></div>
+            <div class="stat-value" id="stat-streak">0</div>
+            <div class="stat-label">Current streak</div>
+          </div>
+          <div class="card stat-card card-interactive">
+            <div class="stat-icon stat-icon-success"><i data-lucide="award"></i></div>
+            <div class="stat-value" id="stat-longest">0</div>
+            <div class="stat-label">Longest streak</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section grid-2">
+        <div class="card score-ring-wrap reveal">
+          <div class="score-ring">
+            <svg viewBox="0 0 110 110" aria-hidden="true">
+              <defs>
+                <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#60a5fa" />
+                  <stop offset="100%" stop-color="#2563eb" />
+                </linearGradient>
+              </defs>
+              <circle class="track" cx="55" cy="55" r="46"></circle>
+              <circle class="fill" id="score-fill" cx="55" cy="55" r="46"></circle>
+            </svg>
+            <div class="score-ring-value">
+              <strong id="score-value">0</strong>
+              <span>Score</span>
+            </div>
+          </div>
+          <div class="score-info">
+            <h3>Productivity score</h3>
+            <p id="score-label">Calculating your focus…</p>
+            <a href="analytics.html" class="btn btn-secondary btn-sm">See breakdown</a>
+          </div>
+        </div>
+
+        <div class="card reveal chart-card">
+          <div class="card-header">
+            <h3>Weekly overview</h3>
+            <span class="badge badge-blue" id="week-legend">Last 7 days</span>
+          </div>
+          <div class="chart-canvas-wrap">
+            <canvas id="week-chart" aria-label="Weekly productivity chart"></canvas>
+          </div>
+          <div class="week-bars hidden" id="week-bars"></div>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="section-header">
+          <h2>Quick actions</h2>
+        </div>
+        <div class="quick-actions stagger">
+          <a class="quick-action" href="index.html?add=1">
+            <div class="quick-action-icon"><i data-lucide="plus"></i></div>
+            <span>Add task</span>
+          </a>
+          <a class="quick-action" href="calendar.html">
+            <div class="quick-action-icon"><i data-lucide="calendar-days"></i></div>
+            <span>Open calendar</span>
+          </a>
+          <a class="quick-action" href="analytics.html">
+            <div class="quick-action-icon"><i data-lucide="line-chart"></i></div>
+            <span>Analytics</span>
+          </a>
+          <a class="quick-action" href="profile.html">
+            <div class="quick-action-icon"><i data-lucide="settings"></i></div>
+            <span>Settings</span>
+          </a>
+        </div>
+      </section>
+
+      <section class="section reveal">
+        <div class="section-header">
+          <h2>Today’s tasks</h2>
+          <a href="index.html" class="btn btn-ghost btn-sm">View all</a>
+        </div>
+        <div class="card">
+          <div id="today-task-list" class="task-list"></div>
+          <div id="today-empty" class="empty-state hidden">
+            <div class="empty-state-icon"><i data-lucide="sparkles"></i></div>
+            <h3>Nothing due today</h3>
+            <p>Enjoy the calm — or schedule something meaningful.</p>
+            <a href="index.html?add=1" class="btn btn-primary btn-sm"><i data-lucide="plus"></i> Add task</a>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

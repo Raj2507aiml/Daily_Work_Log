@@ -1,78 +1,48 @@
 # Daily Work Log
 
-A simple web application for logging daily work tasks and hours.
+Premium productivity web app for tracking daily tasks and progress — HTML, CSS, and vanilla JavaScript. Data and auth use LocalStorage only.
 
-## Features
+## Quick start
 
-- Add work tasks with hours spent
-- View all logged work entries sorted by date
-- Clean, responsive UI
-- SQLite database for data storage
-
-## Project Structure
-
-```
-Daily_work_log/
-├── backend/
-│   ├── db.js          # Database connection and setup
-│   ├── package.json   # Backend dependencies
-│   └── server.js      # Express server with API endpoints
-└── frontend/
-    ├── index.html     # Main HTML page
-    ├── script.js      # Frontend JavaScript
-    └── style.css      # CSS styling
+```bash
+cd Daily_work_log
+python -m http.server 5500
 ```
 
-## Setup and Installation
+Open **http://localhost:5500/login.html**
 
-### Prerequisites
+1. Register an account  
+2. You’re taken to the dashboard  
+3. Tasks, calendar, and analytics are scoped to your user  
 
-- Node.js (v14 or higher)
-- npm
+## What’s included
 
-### Installation
+- **Auth** — register, login, logout, session remember, per-user tasks  
+- **Dashboard** — all stats computed from tasks (live updates, Chart.js weekly overview)  
+- **Tasks** — CRUD, notes, search/filter/sort, drag & drop, FAB, shortcuts (`N`, `/`)  
+- **Calendar** — month view with indicators  
+- **Analytics** — Chart.js (status, weekly, monthly, categories)  
+- **Profile** — edit profile, dark/light theme, reset data, logout  
 
-1. Clone the repository:
-   ```bash
-   git clone <repository-url>
-   cd Daily_work_log
-   ```
+## Structure
 
-2. Install backend dependencies:
-   ```bash
-   cd backend
-   npm install
-   ```
+```
+├── login.html / register.html
+├── dashboard.html / index.html / calendar.html / analytics.html / profile.html
+├── css/   style · components · dashboard · animations · responsive
+└── js/    auth · storage · theme · app · dashboard · calendar · analytics
+```
 
-3. Start the server:
-   ```bash
-   npm start
-   ```
+## Keyboard shortcuts
 
-4. Open your browser and navigate to `http://localhost:3000` or open `frontend/index.html` directly.
+| Key | Action |
+|-----|--------|
+| `N` | New task |
+| `/` or `Ctrl/Cmd + K` | Focus search (Tasks) |
+| `Esc` | Close modal |
 
-## API Endpoints
+## Notes
 
-- `POST /add` - Add a new work log entry
-  - Body: `{ "task": "string", "hours": number }`
-- `GET /logs` - Retrieve all work log entries
-
-## Technologies Used
-
-- **Backend**: Node.js, Express.js, SQLite
-- **Frontend**: HTML, CSS, JavaScript
-- **Database**: SQLite
-
-## Deployment
-
-This application can be deployed to platforms like Heroku, Vercel, or any Node.js hosting service.
-
-For Heroku deployment:
-1. Create a Heroku app
-2. Set the buildpack to Node.js
-3. Deploy the backend folder
-4. Update the frontend API calls to use the deployed backend URL
-
-## License
-
-ISC
+- Each user’s tasks are stored under scoped LocalStorage keys.  
+- Theme preference is global on the device.  
+- Passwords are hashed for demo purposes (not production-grade security).  
