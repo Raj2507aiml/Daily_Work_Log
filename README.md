@@ -8,7 +8,7 @@ Premium productivity web app for tracking daily tasks and progress — HTML, CSS
 cd Daily_work_log
 python -m http.server 5500
 ```
-
+Live server **https://raj2507aiml.github.io/Daily_Work_Log/**
 Open **http://localhost:5500/login.html**
 
 1. Register an account  
