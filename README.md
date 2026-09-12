@@ -1,8 +1,6 @@
 # Daily Work Log
-
 Premium productivity web app for tracking daily tasks and progress — HTML, CSS, and vanilla JavaScript. Data and auth use LocalStorage only.
 ## Quick start
-
 ```bash
 cd Daily_work_log
 python -m http.server 5500
