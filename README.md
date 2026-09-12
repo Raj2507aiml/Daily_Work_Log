@@ -11,7 +11,6 @@ python -m http.server 5500
 Live server **https://raj2507aiml.github.io/Daily_Work_Log/**
 
 Open **http://localhost:5500/login.html**
-
 1. Register an account  
 2. You’re taken to the dashboard  
 3. Tasks, calendar, and analytics are scoped to your user  
